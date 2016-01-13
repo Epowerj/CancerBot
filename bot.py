@@ -1,6 +1,8 @@
 from telegram import Updater
 from key import apikey
 
+import datetime
+
 
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text='Hi!')
@@ -14,6 +16,14 @@ def ping(bot, update):
     bot.sendMessage(update.message.chat_id, text='Pong')
 
 
+def boat(bot, update):
+    bot.sendMessage(update.message.chat_id, text="You don't deserve a boat, take this log instead")
+
+
+def time(bot, update):
+    bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
+
+
 def error(bot, update, error):
     print('Update "%s" caused error "%s"' % (update, error))
 
@@ -25,6 +35,8 @@ def main():
     dp.addTelegramCommandHandler("start", start)
     dp.addTelegramCommandHandler("help", help)
     dp.addTelegramCommandHandler("ping", ping)
+    dp.addTelegramCommandHandler("time", time)
+    dp.addTelegramCommandHandler("boat", boat)
 
     # dp.addTelegramMessageHandler(tally)
 
