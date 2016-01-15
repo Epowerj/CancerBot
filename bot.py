@@ -12,6 +12,12 @@ def help(bot, update):
     bot.sendMessage(update.message.chat_id, text='Just ask @Epowerj')
 
 
+def test(bot, update):
+    bot.sendMessage(update.message.chat_id, text='The evil seed of what you have done')
+    bot.sendMessage(update.message.chat_id, text='`G E R M I N A T E S`')
+    bot.sendMessage(update.message.chat_id, text='within you...')
+
+
 def ping(bot, update):
     bot.sendMessage(update.message.chat_id, text='Pong')
 
@@ -34,6 +40,7 @@ def main():
 
     dp.addTelegramCommandHandler("start", start)
     dp.addTelegramCommandHandler("help", help)
+    dp.addTelegramCommandHandler("test", test)
     dp.addTelegramCommandHandler("ping", ping)
     dp.addTelegramCommandHandler("time", time)
     dp.addTelegramCommandHandler("boat", boat)
