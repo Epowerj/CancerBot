@@ -50,6 +50,7 @@ def main():
     dp.addTelegramCommandHandler("ping", ping)
     dp.addTelegramCommandHandler("time", time)
     dp.addTelegramCommandHandler("boat", boat)
+    dp.addTelegramCommandHandler("fortune", fortune)
 
     # dp.addTelegramMessageHandler(tally)
 
