@@ -2,6 +2,7 @@ from telegram import Updater
 from key import apikey
 
 import datetime
+import fortune
 
 
 def start(bot, update):
@@ -14,7 +15,7 @@ def help(bot, update):
 
 def test(bot, update):
     bot.sendMessage(update.message.chat_id, text='The evil seed of what you have done')
-    bot.sendMessage(update.message.chat_id, text='`G E R M I N A T E S`')
+    bot.sendMessage(update.message.chat_id, text='G E R M I N A T E S')
     bot.sendMessage(update.message.chat_id, text='within you...')
 
 
@@ -28,6 +29,11 @@ def boat(bot, update):
 
 def time(bot, update):
     bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
+
+
+def fortune(bot, update):
+    bot.sendMessage(update.message.chat_id, text=fortune.get_random_fortune(
+            "/home/epowerj/workspace/fortunes/fortunes"))
 
 
 def error(bot, update, error):
