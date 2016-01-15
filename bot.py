@@ -31,9 +31,10 @@ def time(bot, update):
     bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
 
 
-def fortune(bot, update):
-    bot.sendMessage(update.message.chat_id, text=fortune.get_random_fortune(
-            "/home/epowerj/workspace/fortunes/fortunes"))
+def cookie(bot, update):
+    bot.sendMessage(update.message.chat_id, text='Getting your fortune...')
+    out = fortune.get_random_fortune('/home/epowerj/workspace/fortunes/fortunes')
+    bot.sendMessage(update.message.chat_id, text=out)
 
 
 def error(bot, update, error):
@@ -50,7 +51,7 @@ def main():
     dp.addTelegramCommandHandler("ping", ping)
     dp.addTelegramCommandHandler("time", time)
     dp.addTelegramCommandHandler("boat", boat)
-    dp.addTelegramCommandHandler("fortune", fortune)
+    dp.addTelegramCommandHandler("cookie", cookie)
 
     # dp.addTelegramMessageHandler(tally)
 
