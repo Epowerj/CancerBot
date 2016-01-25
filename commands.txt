@@ -1,0 +1,3 @@
+events - see upcoming events
+time - get current bot time
+cookie - get a fortune
