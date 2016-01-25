@@ -41,6 +41,11 @@ def error(bot, update, error):
     print('Update "%s" caused error "%s"' % (update, error))
 
 
+def events(bot, update):
+    bot.sendMessage(update.message.chat_id, text="Upcoming Events: \n" +
+                                                 "Cancer Anniversary - Celebrating an entire year of cancer!")
+
+
 def main():
     updater = Updater(apikey)
     dp = updater.dispatcher
@@ -52,6 +57,7 @@ def main():
     dp.addTelegramCommandHandler("time", time)
     dp.addTelegramCommandHandler("boat", boat)
     dp.addTelegramCommandHandler("cookie", cookie)
+    dp.addTelegramCommandHandler("events", events)
 
     # dp.addTelegramMessageHandler(tally)
 
