@@ -63,7 +63,7 @@ def main():
     dp.addTelegramCommandHandler("boat", boat)
     dp.addTelegramCommandHandler("cookie", cookie)
     dp.addTelegramCommandHandler("events", events)
-    dp.addTelegramCommandHandler("gameing", gaming)
+    dp.addTelegramCommandHandler("gaming", gaming)
 
     # dp.addTelegramMessageHandler(tally)
 
