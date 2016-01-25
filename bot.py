@@ -46,6 +46,11 @@ def events(bot, update):
                                                  "Cancer Anniversary - https://gist.github.com/Epowerj/ea2c883bcb14516fd99d")
 
 
+def gaming(bot, update):
+    bot.sendMessage(update.message.chat_id, text="CCentral Gaming Info: \n" +
+                                                 "https://gist.github.com/Epowerj/4f200ee4af54042a0b11")
+
+
 def main():
     updater = Updater(apikey)
     dp = updater.dispatcher
@@ -58,6 +63,7 @@ def main():
     dp.addTelegramCommandHandler("boat", boat)
     dp.addTelegramCommandHandler("cookie", cookie)
     dp.addTelegramCommandHandler("events", events)
+    dp.addTelegramCommandHandler("gameing", gaming)
 
     # dp.addTelegramMessageHandler(tally)
 
