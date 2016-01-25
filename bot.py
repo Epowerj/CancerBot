@@ -43,7 +43,7 @@ def error(bot, update, error):
 
 def events(bot, update):
     bot.sendMessage(update.message.chat_id, text="Upcoming Events: \n" +
-                                                 "Cancer Anniversary - Celebrating an entire year of cancer!")
+                                                 "Cancer Anniversary - https://gist.github.com/Epowerj/ea2c883bcb14516fd99d")
 
 
 def main():
