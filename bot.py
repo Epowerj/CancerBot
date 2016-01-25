@@ -42,12 +42,12 @@ def error(bot, update, error):
 
 
 def events(bot, update):
-    bot.sendMessage(update.message.chat_id, text="Upcoming Events: \n" +
+    bot.sendMessage(update.message.chat_id, disable_web_page_preview=True, text="Upcoming Events: \n" +
                                                  "Cancer Anniversary - https://gist.github.com/Epowerj/ea2c883bcb14516fd99d")
 
 
 def gaming(bot, update):
-    bot.sendMessage(update.message.chat_id, text="CCentral Gaming Info: \n" +
+    bot.sendMessage(update.message.chat_id, disable_web_page_preview=True, text="CCentral Gaming Info: \n" +
                                                  "https://gist.github.com/Epowerj/4f200ee4af54042a0b11")
 
 
