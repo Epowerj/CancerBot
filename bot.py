@@ -33,7 +33,7 @@ def time(bot, update):
 
 def cookie(bot, update):
     # bot.sendMessage(update.message.chat_id, text='Getting your fortune...')
-    out = fortune.get_random_fortune('/home/epowerj/workspace/fortunes/fortunes')
+    out = fortune.get_random_fortune('/home/pi/CancerBot/fortunes/fortunes')
     bot.sendMessage(update.message.chat_id, text=out)
 
 
