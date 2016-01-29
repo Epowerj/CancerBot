@@ -15,12 +15,12 @@ def tally(bot, update):
 
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text='Hi!')
-    tally(bot,update)
+    tally(bot, update)
 
 
 def help(bot, update):
     bot.sendMessage(update.message.chat_id, text='Just ask @Epowerj')
-    tally(bot,update)
+    tally(bot, update)
 
 
 def test(bot, update):
@@ -32,24 +32,24 @@ def test(bot, update):
 
 def ping(bot, update):
     bot.sendMessage(update.message.chat_id, text='Pong')
-    tally(bot,update)
+    tally(bot, update)
 
 
 def boat(bot, update):
     bot.sendMessage(update.message.chat_id, text="You don't deserve a boat, take this log instead")
-    tally(bot,update)
+    tally(bot, update)
 
 
 def time(bot, update):
     bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
-    tally(bot,update)
+    tally(bot, update)
 
 
 def cookie(bot, update):
     # bot.sendMessage(update.message.chat_id, text='Getting your fortune...')
     out = fortune.get_random_fortune('/home/pi/CancerBot/fortunes/fortunes')
     bot.sendMessage(update.message.chat_id, text=out)
-    tally(bot,update)
+    tally(bot, update)
 
 
 def error(bot, update, error):
@@ -59,13 +59,13 @@ def error(bot, update, error):
 def events(bot, update):
     bot.sendMessage(update.message.chat_id, disable_web_page_preview=True, text="Upcoming Events: \n" +
                                                  "Cancer Anniversary - https://gist.github.com/Epowerj/ea2c883bcb14516fd99d")
-    tally(bot,update)
+    tally(bot, update)
 
 
 def gaming(bot, update):
     bot.sendMessage(update.message.chat_id, disable_web_page_preview=True, text="CCentral Gaming Info: \n" +
                                                  "https://gist.github.com/Epowerj/4f200ee4af54042a0b11")
-    tally(bot,update)
+    tally(bot, update)
 
 
 def main():
