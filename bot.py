@@ -13,6 +13,11 @@ def tally(bot, update):
     print botan.track(botan_token, uid, message_dict, event_name)
 
 
+def kek_kounter(bot, update):
+    if update.message.text == 'kek' or update.message.text == 'kek!':
+        tally(bot, update)
+
+
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text='Hi!')
     tally(bot, update)
@@ -81,7 +86,7 @@ def main():
     dp.addTelegramCommandHandler("cookie", cookie)
     dp.addTelegramCommandHandler("events", events)
     dp.addTelegramCommandHandler("gaming", gaming)
-    dp.addTelegramMessageHandler(tally)
+    dp.addTelegramMessageHandler(kek_kounter)
 
     dp.addErrorHandler(error)
 
