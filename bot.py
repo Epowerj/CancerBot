@@ -24,7 +24,7 @@ def help(bot, update):
 
 
 def test(bot, update):
-    bot.sendMessage(update.message.chat_id, text='The evil seed of what you have done')
+    bot.sendMessage(update.message.chat_id, text='Even now, the evil seed of what you have done')
     bot.sendMessage(update.message.chat_id, text='G E R M I N A T E S')
     bot.sendMessage(update.message.chat_id, text='within you...')
     tally(bot,update)
