@@ -1,8 +1,6 @@
 from telegram import Updater
 from key import apikey
-import botan
 import datetime
-import fortune
 
 fortuneDb = "/home/epowerj/Public/fortunes/fortunes"
 
@@ -11,7 +9,7 @@ def tally(bot, update):
     uid = update.message.from_user
     message_dict = update.message.to_dict()
     event_name = update.message.text
-    print(botan.track(botan_token, uid, message_dict, event_name))
+    #print(botan.track(botan_token, uid, message_dict, event_name))
 
 
 def kek_kounter(bot, update):
@@ -51,13 +49,6 @@ def time(bot, update):
     tally(bot, update)
 
 
-def cookie(bot, update):
-    # bot.sendMessage(update.message.chat_id, text='Getting your fortune...')
-    out = fortune.get_random_fortune(fortuneDb)
-    bot.sendMessage(update.message.chat_id, text=out)
-    tally(bot, update)
-
-
 def error(bot, update, error):
     print('Update "%s" caused error "%s"' % (update, error))
 
@@ -84,7 +75,6 @@ def main():
     dp.addTelegramCommandHandler("ping", ping)
     dp.addTelegramCommandHandler("time", time)
     dp.addTelegramCommandHandler("boat", boat)
-    dp.addTelegramCommandHandler("cookie", cookie)
     dp.addTelegramCommandHandler("events", events)
     dp.addTelegramCommandHandler("gaming", gaming)
     dp.addTelegramMessageHandler(kek_kounter)
