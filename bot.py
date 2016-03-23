@@ -4,13 +4,14 @@ import botan
 import datetime
 import fortune
 
+fortuneDb = "/home/epowerj/Public/fortunes/fortunes"
 
 def tally(bot, update):
     botan_token = '9b30424f-889e-4608-a17c-fa1accc40913' # Token got from @botaniobot
     uid = update.message.from_user
     message_dict = update.message.to_dict()
     event_name = update.message.text
-    print botan.track(botan_token, uid, message_dict, event_name)
+    print(botan.track(botan_token, uid, message_dict, event_name))
 
 
 def kek_kounter(bot, update):
@@ -52,7 +53,7 @@ def time(bot, update):
 
 def cookie(bot, update):
     # bot.sendMessage(update.message.chat_id, text='Getting your fortune...')
-    out = fortune.get_random_fortune('/home/pi/CancerBot/fortunes/fortunes')
+    out = fortune.get_random_fortune(fortuneDb)
     bot.sendMessage(update.message.chat_id, text=out)
     tally(bot, update)
 
