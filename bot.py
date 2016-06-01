@@ -35,7 +35,6 @@ def boat(bot, update):
 
 def time(bot, update):
     bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
-    tally(bot, update)
 
 
 def error(bot, update, error):
@@ -46,14 +45,14 @@ def main():
     updater = Updater(apikey)
     dp = updater.dispatcher
 
-    dp.addTelegramCommandHandler("start", start)
-    dp.addTelegramCommandHandler("help", help)
-    dp.addTelegramCommandHandler("test", test)
-    dp.addTelegramCommandHandler("ping", ping)
-    dp.addTelegramCommandHandler("time", time)
-    dp.addTelegramCommandHandler("boat", boat)
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("test", test))
+    dp.add_handler(CommandHandler("ping", ping))
+    dp.add_handler(CommandHandler("time", time))
+    dp.add_handler(CommandHandler("boat", boat))
 
-    dp.addErrorHandler(error)
+    dp.add_error_handler(error)
 
     updater.start_polling(timeout=5)
 
