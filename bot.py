@@ -4,6 +4,13 @@ from key import apikey
 import datetime
 
 
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+
+
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text="Oh hello, I didn't see you there")
 
