@@ -1,4 +1,1 @@
-events - see upcoming events
-gaming - get gaming info
 time - get current bot time
-cookie - get a fortune
