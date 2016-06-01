@@ -52,7 +52,7 @@ def main():
     dp.add_handler(CommandHandler("time", time))
     dp.add_handler(CommandHandler("boat", boat))
 
-    dp.add_error_handler(error)B
+    dp.add_error_handler(error)
 
     updater.start_polling(timeout=5)
 
