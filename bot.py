@@ -1,4 +1,5 @@
-from telegram import Updater
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import logging
 from key import apikey
 import datetime
 
@@ -34,16 +35,6 @@ def error(bot, update, error):
     print('Update "%s" caused error "%s"' % (update, error))
 
 
-def events(bot, update):
-    bot.sendMessage(update.message.chat_id, disable_web_page_preview=True, text="Upcoming Events: \n" +
-                                                 "Cancer Anniversary - https://gist.github.com/Epowerj/ea2c883bcb14516fd99d")
-
-
-def gaming(bot, update):
-    bot.sendMessage(update.message.chat_id, disable_web_page_preview=True, text="CCentral Gaming Info: \n" +
-                                                 "https://gist.github.com/Epowerj/4f200ee4af54042a0b11")
-
-
 def main():
     updater = Updater(apikey)
     dp = updater.dispatcher
@@ -54,9 +45,6 @@ def main():
     dp.addTelegramCommandHandler("ping", ping)
     dp.addTelegramCommandHandler("time", time)
     dp.addTelegramCommandHandler("boat", boat)
-    dp.addTelegramCommandHandler("events", events)
-    dp.addTelegramCommandHandler("gaming", gaming)
-    dp.addTelegramMessageHandler(kek_kounter)
 
     dp.addErrorHandler(error)
 
