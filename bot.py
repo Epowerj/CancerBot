@@ -2,7 +2,11 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from key import apikey
 import datetime
+import json
 
+meme_waiting = True
+
+memers = {}
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -11,8 +15,16 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
+def load_memers():
+    #load
+
+
+def save_memers():
+    #save
+
+
 def start(bot, update):
-    bot.sendMessage(update.message.chat_id, text="Oh hello, I didn't see you there")
+    bot.sendMessage(update.message.chat_id, text="Why hello, I didn't see you there")
 
 
 def help(bot, update):
@@ -37,6 +49,27 @@ def time(bot, update):
     bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
 
 
+def incrementMemer(user):
+    if (user in memers):
+        memers[user] += 1
+    else:
+        memers[user] = 0
+        memers[user] += 1
+    
+
+def ebin(bot, update):
+    if meme_waiting:
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" caught the meme!")
+        incrementMemer(update.message.from_user.id)
+        #set meme_waiting to false
+
+def stats(bot, update):
+    if (update.message.from_user.id in memers):
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has "+str(memers[update.message.from_user.id]))
+    else:
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has 0")
+
+
 def error(bot, update, error):
     print('Update "%s" caused error "%s"' % (update, error))
 
@@ -51,6 +84,8 @@ def main():
     dp.add_handler(CommandHandler("ping", ping))
     dp.add_handler(CommandHandler("time", time))
     dp.add_handler(CommandHandler("boat", boat))
+    dp.add_handler(CommandHandler("ebin", ebin))
+    dp.add_handler(CommandHandler("stats", stats))
 
     dp.add_error_handler(error)
 
