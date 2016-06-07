@@ -16,10 +16,12 @@ logger = logging.getLogger(__name__)
 
 
 def load_memers():
+    json.dumps(memers)
     #load
 
 
 def save_memers():
+    json.dumps(memers)
     #save
 
 
@@ -47,6 +49,11 @@ def boat(bot, update):
 
 def time(bot, update):
     bot.sendMessage(update.message.chat_id, text=str(datetime.datetime.now()))
+
+
+def chatinfo(bot, update):
+    bot.sendMessage(updage.message.chat_id, text="chat_id is "+str(updage.message.chat_id))
+    bot.sendMessage(updage.message.chat_id, text="user id is "+str(update.message.from_user.id))
 
 
 def incrementMemer(user):
@@ -86,6 +93,7 @@ def main():
     dp.add_handler(CommandHandler("boat", boat))
     dp.add_handler(CommandHandler("ebin", ebin))
     dp.add_handler(CommandHandler("stats", stats))
+    dp.add_handler(CommandHandler("chatinfo", chatinfo))
 
     dp.add_error_handler(error)
 
