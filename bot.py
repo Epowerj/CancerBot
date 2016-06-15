@@ -5,24 +5,28 @@ import datetime
 import json
 
 meme_waiting = True
-
 memers = {}
 
+savepath = "memers.dict"
+
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
 
 def load_memers():
-    json.dumps(memers)
-    #load
+    print("loading memers")
+    save = open(savepath, 'r')
+    memers = json.load(save)
+    print(memers)
 
 
 def save_memers():
-    json.dumps(memers)
-    #save
+    print("saving memers")
+    save = open(savepath, 'w')
+    json.dump(memers, save)
+    print(memers)
 
 
 def start(bot, update):
@@ -52,27 +56,30 @@ def time(bot, update):
 
 
 def chatinfo(bot, update):
-    bot.sendMessage(updage.message.chat_id, text="chat_id is "+str(updage.message.chat_id))
+    bot.sendMessage(updage.message.chat_id, text="chat_id is "+str(update.message.chat_id))
     bot.sendMessage(updage.message.chat_id, text="user id is "+str(update.message.from_user.id))
 
 
 def incrementMemer(user):
+    print(memers)
     if (user in memers):
         memers[user] += 1
     else:
         memers[user] = 0
         memers[user] += 1
+
+    save_memers()
     
 
 def ebin(bot, update):
     if meme_waiting:
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" caught the meme!")
-        incrementMemer(update.message.from_user.id)
+        incrementMemer(str(update.message.from_user.id))
         #set meme_waiting to false
 
 def stats(bot, update):
-    if (update.message.from_user.id in memers):
-        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has "+str(memers[update.message.from_user.id]))
+    if (str(update.message.from_user.id) in memers):
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has "+str(memers[str(update.message.from_user.id)]))
     else:
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has 0")
 
@@ -82,6 +89,8 @@ def error(bot, update, error):
 
 
 def main():
+    load_memers()
+
     updater = Updater(apikey)
     dp = updater.dispatcher
 
