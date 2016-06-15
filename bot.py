@@ -16,17 +16,15 @@ logger = logging.getLogger(__name__)
 
 
 def load_memers():
-    print("loading memers")
+    global memers
+
     save = open(savepath, 'r')
     memers = json.load(save)
-    print(memers)
 
 
 def save_memers():
-    print("saving memers")
     save = open(savepath, 'w')
     json.dump(memers, save)
-    print(memers)
 
 
 def start(bot, update):
@@ -56,12 +54,11 @@ def time(bot, update):
 
 
 def chatinfo(bot, update):
-    bot.sendMessage(updage.message.chat_id, text="chat_id is "+str(update.message.chat_id))
-    bot.sendMessage(updage.message.chat_id, text="user id is "+str(update.message.from_user.id))
+    bot.sendMessage(update.message.chat_id, text="chat_id is "+str(update.message.chat_id))
+    bot.sendMessage(update.message.chat_id, text="user id is "+str(update.message.from_user.id))
 
 
 def incrementMemer(user):
-    print(memers)
     if (user in memers):
         memers[user] += 1
     else:
@@ -89,7 +86,11 @@ def error(bot, update, error):
 
 
 def main():
+    print("memers default value:")
+    print(memers)
     load_memers()
+    print("loaded memers:")
+    print(memers)
 
     updater = Updater(apikey)
     dp = updater.dispatcher
