@@ -1,10 +1,9 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from key import apikey
-import datetime
-import json
+import datetime, json
 
-meme_waiting = True
+meme_waiting = False
 memers = {}
 
 savepath = "memers.dict"
@@ -88,7 +87,9 @@ def error(bot, update, error):
 def main():
     print("memers default value:")
     print(memers)
+
     load_memers()
+
     print("loaded memers:")
     print(memers)
 
