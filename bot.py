@@ -68,16 +68,27 @@ def incrementMemer(user):
     
 
 def ebin(bot, update):
+    global meme_waiting
+
     if meme_waiting:
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" caught the meme!")
         incrementMemer(str(update.message.from_user.id))
-        #set meme_waiting to false
+        meme_waiting = False
+    else:
+        bot.sendMessage(update.message.chat_id, text="There is no meme to catch")
 
 def stats(bot, update):
     if (str(update.message.from_user.id) in memers):
-        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has "+str(memers[str(update.message.from_user.id)]))
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has " + str(memers[str(update.message.from_user.id)]) + " ebins")
     else:
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has 0")
+
+
+def memegrab(bot):
+    global meme_waiting
+
+    meme_waiting = True
+    bot.sendMessage(-1001044604031, text="A wild meme has appeared! Do /ebin to catch it!")
 
 
 def error(bot, update, error):
@@ -95,6 +106,7 @@ def main():
 
     updater = Updater(apikey)
     dp = updater.dispatcher
+    jqueue = updater.job_queue
 
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
@@ -109,6 +121,8 @@ def main():
     dp.add_error_handler(error)
 
     updater.start_polling(timeout=5)
+
+    jqueue.put(memegrab, 1440, next_t=0)
 
     # Run the bot until the user presses Ctrl-C or the process receives SIGINT, SIGTERM or SIGABRT
     updater.idle()
