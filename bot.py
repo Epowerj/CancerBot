@@ -81,7 +81,7 @@ def stats(bot, update):
     if (str(update.message.from_user.id) in memers):
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has " + str(memers[str(update.message.from_user.id)]) + " ebins")
     else:
-        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has 0")
+        bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" has 0 ebins")
 
 
 def memegrab(bot):
@@ -122,7 +122,7 @@ def main():
 
     updater.start_polling(timeout=5)
 
-    jqueue.put(memegrab, 1440, next_t=0)
+    jqueue.put(memegrab, 3660, next_t=0)
 
     # Run the bot until the user presses Ctrl-C or the process receives SIGINT, SIGTERM or SIGABRT
     updater.idle()
