@@ -95,7 +95,12 @@ def memegrab(bot):
     bot.sendMessage(ccentral_id, text="A wild meme has appeared! Do /ebin to catch it!")
 
 
+def drop(bot, update):
+    global meme_waiting
 
+    memers[str(update.message.from_user.id)] -= 1
+    meme_waiting = True
+    bot.sendMessage(ccentral_id, text=update.message.from_user.first_name+" has dropped a meme! Use /ebin to catch it!")
 
 
 def error(bot, update, error):
