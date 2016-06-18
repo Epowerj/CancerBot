@@ -129,6 +129,7 @@ def main():
     dp.add_handler(CommandHandler("ebin", ebin))
     dp.add_handler(CommandHandler("stats", stats))
     dp.add_handler(CommandHandler("chatinfo", chatinfo))
+    dp.add_handler(CommandHandler("drop", drop))
 
     dp.add_error_handler(error)
 
