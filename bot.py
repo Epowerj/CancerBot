@@ -8,6 +8,8 @@ memers = {}
 
 savepath = "memers.dict"
 
+ccentral_id = -1001044604031
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -69,13 +71,15 @@ def incrementMemer(user):
 
 def ebin(bot, update):
     global meme_waiting
+    global ccentral_id
 
-    if meme_waiting:
+    if meme_waiting and update.message.chat_id == ccentral_id:
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" caught the meme!")
         incrementMemer(str(update.message.from_user.id))
         meme_waiting = False
     else:
         bot.sendMessage(update.message.chat_id, text="There is no meme to catch")
+
 
 def stats(bot, update):
     if (str(update.message.from_user.id) in memers):
@@ -88,7 +92,10 @@ def memegrab(bot):
     global meme_waiting
 
     meme_waiting = True
-    bot.sendMessage(-1001044604031, text="A wild meme has appeared! Do /ebin to catch it!")
+    bot.sendMessage(ccentral_id, text="A wild meme has appeared! Do /ebin to catch it!")
+
+
+
 
 
 def error(bot, update, error):
