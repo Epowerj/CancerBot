@@ -97,10 +97,13 @@ def memegrab(bot):
 
 def drop(bot, update):
     global meme_waiting
-
-    memers[str(update.message.from_user.id)] -= 1
-    meme_waiting += 1
-    bot.sendMessage(ccentral_id, text=update.message.from_user.first_name+" has dropped a meme! Use /ebin to catch it!")
+    
+    if memers[str(update.message.from_user.id)] > 0:
+        memers[str(update.message.from_user.id)] -= 1
+        meme_waiting += 1
+        bot.sendMessage(ccentral_id, text=update.message.from_user.first_name+" has dropped a meme! Use /ebin to catch it!")
+    else:
+        bot.sendMessage(update.message.chat_id, text="You're out of ebins")
 
 
 def error(bot, update, error):
