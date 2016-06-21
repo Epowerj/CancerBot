@@ -1,10 +1,13 @@
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from key import apikey
-import datetime, json
+import datetime, json, random
+from time import sleep
 
 meme_waiting = 0
 memers = {}
+# gifts = {} TODO count gifts
 
 savepath = "memers.dict"
 
@@ -73,7 +76,7 @@ def ebin(bot, update):
     global meme_waiting
     global ccentral_id
 
-    if meme_waiting and update.message.chat_id == ccentral_id:
+    if meme_waiting > 0 and update.message.chat_id == ccentral_id:
         bot.sendMessage(update.message.chat_id, text=update.message.from_user.first_name+" caught the meme!")
         incrementMemer(str(update.message.from_user.id))
         meme_waiting -= 1
@@ -93,6 +96,7 @@ def memegrab(bot):
 
     meme_waiting += 1
     bot.sendMessage(ccentral_id, text="A wild meme has appeared! Do /ebin to catch it!")
+    sleep(random.randint(0, 5000))
 
 
 def drop(bot, update):
@@ -104,6 +108,13 @@ def drop(bot, update):
         bot.sendMessage(ccentral_id, text=update.message.from_user.first_name+" has dropped a meme! Use /ebin to catch it!")
     else:
         bot.sendMessage(update.message.chat_id, text="You're out of ebins")
+
+def gift(bot, update): #TODO
+    if memers[str(update.message.from_user.id)] > 0:
+        commandtext = update.message.text.sprit(' ', 1)[1]
+        
+
+        memers[str(update.message.from_user.id)] -= 1
 
 
 def error(bot, update, error):
@@ -138,7 +149,7 @@ def main():
 
     updater.start_polling(timeout=5)
 
-    jqueue.put(memegrab, 3660, next_t=0)
+    jqueue.put(memegrab, 1800, next_t=0)
 
     # Run the bot until the user presses Ctrl-C or the process receives SIGINT, SIGTERM or SIGABRT
     updater.idle()
