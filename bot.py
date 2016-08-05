@@ -35,6 +35,11 @@ def start(bot, update):
     bot.sendMessage(update.message.chat_id, text="Why hello, I didn't see you there")
 
 
+def parse(bot, update):
+    print(update.message.message_id)
+    hoptidote(bot, update)
+
+
 def help(bot, update):
     bot.sendMessage(update.message.chat_id, text='Just ask @Epowerj')
 
@@ -96,7 +101,20 @@ def memegrab(bot):
 
     meme_waiting += 1
     bot.sendMessage(ccentral_id, text="A wild meme has appeared! Do /ebin to catch it!")
-    sleep(random.randint(0, 5000))
+    sleep(random.randint(0, 5400))
+
+
+def hoptidote(bot, update): #TODO add timeout
+    symptoms = {'normie', 'suffering', 'misery', 'comfy'}
+    antidotes = {27511, 27512, 27513, 27514, 27515, 27516, 27517, 27518, 27519, 27520, 27521, 27522, 27523, 27524, 27525, 
+                 27526, 27527, 27528, 27529, 27530, 27531, 27532, 27533, 27534, 27535, 27536, 27537, 27538, 27539, 27540,
+                 27541, 27542, 27543, 27544, 27545, 27546, 27547, 27548}
+
+    if update.message.from_user.id == 94250469:
+        for symptom in symtoms:
+            if symptom in update.message.text:
+                bot.forward_message(chat_id=update.message.chat_id, message_id=antidotes[random.randint(0, antidotes.length)])
+                break
 
 
 def drop(bot, update):
@@ -109,12 +127,25 @@ def drop(bot, update):
     else:
         bot.sendMessage(update.message.chat_id, text="You're out of ebins")
 
+
 def gift(bot, update): #TODO
     if memers[str(update.message.from_user.id)] > 0:
-        commandtext = update.message.text.sprit(' ', 1)[1]
+        commandtext = update.message.text.split(' ', 1)[1]
         
 
         memers[str(update.message.from_user.id)] -= 1
+
+
+def top(bot, update):
+    global memers
+    import operator
+    sorted_memers = sorted(memers.items(), key=operator.itemgetter(1))
+    
+    toplist = ""
+    for memer in sorted_memers:
+        toplist += memer+"\n"
+
+    bot.sendMessage(updage.message.chat_id, text=toplist)
 
 
 def error(bot, update, error):
@@ -145,11 +176,14 @@ def main():
     dp.add_handler(CommandHandler("chatinfo", chatinfo))
     dp.add_handler(CommandHandler("drop", drop))
 
+    dp.add_handler(MessageHandler([Filters.text], parse))
+
     dp.add_error_handler(error)
 
     updater.start_polling(timeout=5)
-
-    jqueue.put(memegrab, 1800, next_t=0)
+    
+    # Wild meme generation
+    #jqueue.put(memegrab, 1800, next_t=0)
 
     # Run the bot until the user presses Ctrl-C or the process receives SIGINT, SIGTERM or SIGABRT
     updater.idle()
