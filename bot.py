@@ -2,7 +2,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from key import apikey
-import datetime, json, random
+import time, datetime, json, random
 from time import sleep
 
 meme_waiting = 0
@@ -12,6 +12,8 @@ memers = {}
 savepath = "memers.dict"
 
 ccentral_id = -1001044604031
+
+hoptidote_cooldown = time.time()
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -36,9 +38,9 @@ def start(bot, update):
 
 
 def parse(bot, update):
-    print(update.message.message_id)
+    #print(update.message.message_id)
     hoptidote(bot, update)
-
+    
 
 def help(bot, update):
     bot.sendMessage(update.message.chat_id, text='Just ask @Epowerj')
@@ -110,8 +112,9 @@ def hoptidote(bot, update): #TODO add timeout
                  27526, 27527, 27528, 27529, 27530, 27531, 27532, 27533, 27534, 27535, 27536, 27537, 27538, 27539, 27540,
                  27541, 27542, 27543, 27544, 27545, 27546, 27547, 27548}
 
-    if update.message.from_user.id == 94250469:
-        for symptom in symtoms:
+    if update.message.from_user.id == 94250469 and (time.time()-hoptidote_cooldown) > 600:
+        hoptidote_cooldown = time.time()
+        for symptom in symptoms:
             if symptom in update.message.text:
                 bot.forward_message(chat_id=update.message.chat_id, message_id=antidotes[random.randint(0, antidotes.length)])
                 break
