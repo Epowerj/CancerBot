@@ -2,8 +2,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 from key import apikey
-import time, datetime, json, random
-from time import sleep
+import datetime, json, random, time
 
 meme_waiting = 0
 memers = {}
@@ -13,7 +12,7 @@ savepath = "memers.dict"
 
 ccentral_id = -1001044604031
 
-hoptidote_cooldown = time.time()
+hoptidote_cooldown = time.monotonic()
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -35,11 +34,6 @@ def save_memers():
 
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text="Why hello, I didn't see you there")
-
-
-def parse(bot, update):
-    #print(update.message.message_id)
-    hoptidote(bot, update)
     
 
 def help(bot, update):
@@ -107,13 +101,16 @@ def memegrab(bot):
 
 
 def hoptidote(bot, update): #TODO add timeout
+    import time
+    global hoptidote_cooldown
+
     symptoms = {'normie', 'suffering', 'misery', 'comfy'}
     antidotes = {27511, 27512, 27513, 27514, 27515, 27516, 27517, 27518, 27519, 27520, 27521, 27522, 27523, 27524, 27525, 
                  27526, 27527, 27528, 27529, 27530, 27531, 27532, 27533, 27534, 27535, 27536, 27537, 27538, 27539, 27540,
                  27541, 27542, 27543, 27544, 27545, 27546, 27547, 27548}
 
-    if update.message.from_user.id == 94250469 and (time.time()-hoptidote_cooldown) > 600:
-        hoptidote_cooldown = time.time()
+    if update.message.from_user.id == 94250469 and (time.monotonic()-hoptidote_cooldown) > 600:
+        hoptidote_cooldown = time.monotonic()
         for symptom in symptoms:
             if symptom in update.message.text:
                 bot.forward_message(chat_id=update.message.chat_id, message_id=antidotes[random.randint(0, antidotes.length)])
@@ -135,7 +132,6 @@ def gift(bot, update): #TODO
     if memers[str(update.message.from_user.id)] > 0:
         commandtext = update.message.text.split(' ', 1)[1]
         
-
         memers[str(update.message.from_user.id)] -= 1
 
 
@@ -149,6 +145,11 @@ def top(bot, update):
         toplist += memer+"\n"
 
     bot.sendMessage(updage.message.chat_id, text=toplist)
+
+
+def parse(bot, update):
+    #print(update.message.message_id)
+    hoptidote(bot, update)
 
 
 def error(bot, update, error):
