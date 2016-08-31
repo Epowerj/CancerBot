@@ -1,5 +1,5 @@
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import logging
 from key import apikey
@@ -121,12 +121,19 @@ def drop(bot, update):
 
 
 def shop(bot, update):
-    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'), InlineKeyboardButton("Option 2", callback_data='2')],
-                                [InlineKeyboardButton("Option 3", callback_data='3')]]
+    keyboard = [[InlineKeyboardButton("Tux Cringe", callback_data='1'),
+                 InlineKeyboardButton("Interesting SFX", callback_data='2')],
+                [InlineKeyboardButton("Lottery Pack", callback_data='3')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    bot.sendMessage(update.message.chat_id, text="Please choose:", reply_markup=reply_markup)
+    bot.sendMessage(update.message.chat_id, text="Loabot's Wares:", reply_markup=reply_markup)
+
+    
+def shopbutton(bot, update):
+        query = update.callback_query
+
+        bot.editMessageText(text="Selected option: %s" % query.data, chat_id=query.message.chat_id, message_id=query.message.message_id)
 
 
 def gift(bot, update): #TODO
@@ -182,6 +189,7 @@ def main():
     dp.add_handler(CommandHandler("chatinfo", chatinfo))
     dp.add_handler(CommandHandler("drop", drop))
     dp.add_handler(CommandHandler("shop", shop))
+    updater.dispatcher.add_handler(CallbackQueryHandler(shopbutton))
 
     dp.add_handler(MessageHandler([Filters.text], parse))
 
