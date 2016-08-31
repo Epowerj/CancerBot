@@ -1,3 +1,4 @@
 time - get current bot time
 stats - check your stats
 drop - drop an ebin for others to grab
+shop - Loafbot has wares if you have ebin
