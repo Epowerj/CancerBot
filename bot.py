@@ -7,7 +7,7 @@ import datetime, json, random, time
 
 meme_waiting = 0
 memers = {}
-# gifts = {} TODO count gifts
+lottery_jackpot = 30
 
 savepath = "memers.dict"
 
@@ -70,7 +70,20 @@ def incrementMemer(user):
         memers[user] += 1
 
     save_memers()
-    
+
+def charge_ebins(user, amount):    
+    if (user in memers):
+        if memers[user] >= amount:
+            memers[user] -= amount
+            save_memers()
+            return True
+        else:
+            return False
+    else:
+        memers[user] = 0
+        save_memers()
+        return False
+        
 
 def ebin(bot, update):
     global meme_waiting
@@ -99,14 +112,14 @@ def memegrab(bot):
     sleep(random.randint(0, 5400))
 
 
-def hoptidote(bot, update): #TODO add timeout
+def hoptidote(bot, message): #TODO add timeout
     import time
 
     antidotes = [27511, 27512, 27513, 27514, 27515, 27516, 27517, 27518, 27519, 27520, 27521, 27522, 27523, 27524, 27525, 
                  27526, 27527, 27528, 27529, 27530, 27531, 27532, 27533, 27534, 27535, 27536, 27537, 27538, 27539, 27540,
                  27541, 27542, 27543, 27544, 27545, 27546, 27547, 27548, 27654]
 
-    bot.forward_message(chat_id=update.message.chat_id, from_chat_id=83218061, message_id=antidotes[random.randint(0,  len(antidotes))])
+    bot.forward_message(chat_id=message.chat_id, from_chat_id=83218061, message_id=antidotes[random.randint(0,  len(antidotes))])
 
 
 def drop(bot, update):
@@ -121,9 +134,11 @@ def drop(bot, update):
 
 
 def shop(bot, update):
-    keyboard = [[InlineKeyboardButton("Tux Cringe", callback_data='1'),
-                 InlineKeyboardButton("Interesting SFX", callback_data='2')],
-                [InlineKeyboardButton("Lottery Pack", callback_data='3')]]
+    global lottery_jackpot
+    
+    keyboard = [[InlineKeyboardButton("Tux Cringe [5e]", callback_data='1'),
+                 InlineKeyboardButton("Interesting SFX [5e]", callback_data='2')],
+                [InlineKeyboardButton("Lottery [2e] - Current Jackpot: "+ str(lottery_jackpot), callback_data='3')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -133,31 +148,48 @@ def shop(bot, update):
 def shopbutton(bot, update):
         query = update.callback_query
 
-        bot.editMessageText(text="Selected option: %s" % query.data, chat_id=query.message.chat_id, message_id=query.message.message_id)
+        selection = query.data
 
+        #bot.editMessageText(text="Thank you for your purchase, "+query.from_user.first_name,
+        #                    chat_id=query.message.chat_id, message_id=query.message.message_id)
 
-def gift(bot, update): #TODO
-    if memers[str(update.message.from_user.id)] > 0:
-        commandtext = update.message.text.split(' ', 1)[1]
-        
-        memers[str(update.message.from_user.id)] -= 1
-
-
-def top(bot, update):
-    global memers
-    import operator
-    sorted_memers = sorted(memers.items(), key=operator.itemgetter(1))
+        if selection == '1':
+            if charge_ebins(str(query.from_user.id), 5):
+                bot.editMessageText(text="Thank you for your purchase, "+query.from_user.first_name,
+                            chat_id=query.message.chat_id, message_id=query.message.message_id)
+                
+                hoptidote(bot, query.message)
+            else:
+                bot.editMessageText(text="Sorry "+query.from_user.first_name+", you don't have enough ebins",
+                            chat_id=query.message.chat_id, message_id=query.message.message_id)
+        elif selection == '2':
+            if charge_ebins(str(query.from_user.id), 5):
+                bot.editMessageText(text="Thank you for your purchase, "+query.from_user.first_name,
+                            chat_id=query.message.chat_id, message_id=query.message.message_id)
+                
+                print('in progress')
+            else:
+                bot.editMessageText(text="Sorry "+query.from_user.first_name+", you don't have enough ebins",
+                            chat_id=query.message.chat_id, message_id=query.message.message_id)
+        elif selection == '3':
+            if charge_ebins(str(query.from_user.id), 2):
+                bot.editMessageText(text="Thank you for your purchase, "+query.from_user.first_name,
+                            chat_id=query.message.chat_id, message_id=query.message.message_id)
+            
+                lottery(bot, query.message)
+            else:
+                bot.editMessageText(text="Sorry "+query.from_user.first_name+", you don't have enough ebins",
+                            chat_id=query.message.chat_id, message_id=query.message.message_id)
     
-    toplist = ""
-    for memer in sorted_memers:
-        toplist += memer+"\n"
-
-    bot.sendMessage(update.message.chat_id, text=toplist)
-
-
+            
+def lottery(bot, message):
+    global lottery_jackpot
+    
+    bot.sendMessage(message.chat_id, text="(lottery) " + message.from_user.first_name)        
+            
 def parse(bot, update):
     print("Message from " + update.message.from_user.first_name + "(" + str(update.message.from_user.id) + "): " + update.message.text + " (" + str(update.message.message_id) + ")")
-    if " boat" in update.message.text:
+    if "boat" in update.message.text:
         bot.sendMessage(update.message.chat_id, text="You don't deserve a boat, have this log instead")
 
 
