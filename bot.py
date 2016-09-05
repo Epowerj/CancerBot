@@ -71,6 +71,15 @@ def incrementMemer(user):
 
     save_memers()
 
+def give_ebins(user, amount):
+    if (user in memers):
+        memers[user] += amount
+        save_memers()
+    else:
+        memers[user] = amount
+        save_memers()
+        
+    
 def charge_ebins(user, amount):    
     if (user in memers):
         if memers[user] >= amount:
@@ -176,17 +185,27 @@ def shopbutton(bot, update):
                 bot.editMessageText(text="Thank you for your purchase, "+query.from_user.first_name,
                             chat_id=query.message.chat_id, message_id=query.message.message_id)
             
-                lottery(bot, query.message)
+                lottery(bot, query.message, query.from_user)
             else:
                 bot.editMessageText(text="Sorry "+query.from_user.first_name+", you don't have enough ebins",
                             chat_id=query.message.chat_id, message_id=query.message.message_id)
     
             
-def lottery(bot, message):
+def lottery(bot, message, user):
     global lottery_jackpot
+
+    roll = random.randint(1, 100)
+
+    lottery_jackpot += 2
     
-    bot.sendMessage(message.chat_id, text="(lottery) " + message.from_user.first_name)        
-            
+    if roll == 100:
+        give_ebins(user.id, lottery_jackpot)
+        bot.sendMessage(message.chat_id, text=user.first_name+" hit the jackpot!! "+str(lottery_jackpot)+" ebins awarded!")
+        lottery_jackput = 30
+    else:
+        bot.sendMessage(message.chat_id, text="Sorry "+user.first_name+", you got a "+str(roll)+" - Get a 100 to win the jackpot")
+        
+        
 def parse(bot, update):
     print("Message from " + update.message.from_user.first_name + "(" + str(update.message.from_user.id) + "): " + update.message.text + " (" + str(update.message.message_id) + ")")
     if "boat" in update.message.text:
