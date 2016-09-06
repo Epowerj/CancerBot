@@ -7,7 +7,7 @@ import datetime, json, random, time
 
 meme_waiting = 0
 memers = {}
-lottery_jackpot = 30
+lottery_jackpot = 0
 
 savepath = "memers.dict"
 
@@ -21,12 +21,15 @@ logger = logging.getLogger(__name__)
 
 def load_memers():
     global memers
+    global lottery_jackpot
 
     save = open(savepath, 'r')
     memers = json.load(save)
+    lottery_jackpot = memers["jackpot"]
 
 
 def save_memers():
+    memers["jackpot"] = lottery_jackpot
     save = open(savepath, 'w')
     json.dump(memers, save)
 
@@ -197,11 +200,13 @@ def lottery(bot, message, user):
     roll = random.randint(1, 100)
 
     lottery_jackpot += 2
+    save_memers()
     
     if roll == 100:
         give_ebins(user.id, lottery_jackpot)
         bot.sendMessage(message.chat_id, text=user.first_name+" hit the jackpot!! "+str(lottery_jackpot)+" ebins awarded!")
-        lottery_jackput = 30
+        lottery_jackpot = 30
+        save_memers()
     else:
         bot.sendMessage(message.chat_id, text="Sorry "+user.first_name+", you got a "+str(roll)+" - Get a 100 to win the jackpot")
         
