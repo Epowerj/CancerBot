@@ -11,7 +11,8 @@ lottery_jackpot = 0
 
 savepath = "memers.dict"
 
-ccentral_id = -1001044604031
+#ccentral_id = -1001044604031
+ccentral_id = -16462680
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
