@@ -214,7 +214,9 @@ def lottery(bot, message, user):
         
 def parse(bot, update):
     print("Message from " + update.message.from_user.first_name + "(" + str(update.message.from_user.id) + "): " + update.message.text + " (" + str(update.message.message_id) + ")")
-    if "boat" in update.message.text:
+    if "halloween" in update.message.text.lower():
+        bot.sendMessage(update.message.chat_id, text="THE GREAT SKELETON WAR IS COMING")
+    if "boat" in update.message.text.lower():
         bot.sendMessage(update.message.chat_id, text="You don't deserve a boat, have this log instead")
 
 
